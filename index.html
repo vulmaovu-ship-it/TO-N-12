@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống Kê Bài Giảng TOÁN 12 - ANH HOÀNG VŨ (Dành Cho Học Sinh)</title>
+    <!-- Google Fonts: Roboto, Space Grotesk, STIX Two Math, Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,400&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Space+Grotesk:wght@600;700&family=STIX+Two+Math&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="mode-viewer">
+    <!-- FLOATING MATH SYMBOLS BACKGROUND CANVAS -->
+    <div class="math-bg-decorations" id="mathBgDecorations">
+        <!-- Blueprint Grid & Ambient Radial Light Spheres -->
+        <div class="math-bg-grid-overlay"></div>
+        <div class="math-ambient-light light-1"></div>
+        <div class="math-ambient-light light-2"></div>
+        <div class="math-ambient-light light-3"></div>
+
+        <!-- SVG Geometric Math Curves & Coordinates -->
+        <svg class="math-svg-decor svg-axes-3d" viewBox="0 0 200 200" aria-hidden="true">
+            <path d="M 100 100 L 180 100 M 100 100 L 100 20 M 100 100 L 40 160" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <text x="185" y="104" fill="rgba(56, 189, 248, 0.4)" font-size="12" font-family="serif">x</text>
+            <text x="96" y="14" fill="rgba(56, 189, 248, 0.4)" font-size="12" font-family="serif">y</text>
+            <text x="28" y="172" fill="rgba(56, 189, 248, 0.4)" font-size="12" font-family="serif">z</text>
+            <circle cx="100" cy="100" r="3" fill="rgba(56, 189, 248, 0.5)"/>
+        </svg>
+
+        <svg class="math-svg-decor svg-sine-wave" viewBox="0 0 400 120" aria-hidden="true">
+            <path d="M 0 60 Q 50 10, 100 60 T 200 60 T 300 60 T 400 60" fill="none" stroke="rgba(192, 132, 252, 0.2)" stroke-width="2"/>
+            <path d="M 0 60 Q 50 110, 100 60 T 200 60 T 300 60 T 400 60" fill="none" stroke="rgba(56, 189, 248, 0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+
+        <svg class="math-svg-decor svg-trig-circle" viewBox="0 0 160 160" aria-hidden="true">
+            <circle cx="80" cy="80" r="60" fill="none" stroke="rgba(254, 240, 138, 0.2)" stroke-width="1.5"/>
+            <line x1="20" y1="80" x2="140" y2="80" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1"/>
+            <line x1="80" y1="20" x2="80" y2="140" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="122" y2="38" stroke="rgba(74, 222, 128, 0.35)" stroke-width="1.5"/>
+            <path d="M 100 80 A 20 20 0 0 0 94 66" fill="none" stroke="rgba(74, 222, 128, 0.5)" stroke-width="1.2"/>
+            <text x="102" y="72" fill="rgba(74, 222, 128, 0.6)" font-size="11" font-family="serif">θ</text>
+        </svg>
+
+        <svg class="math-svg-decor svg-parabola" viewBox="0 0 200 150" aria-hidden="true">
+            <path d="M 20 20 Q 100 140, 180 20" fill="none" stroke="rgba(244, 114, 182, 0.2)" stroke-width="2"/>
+            <line x1="40" y1="110" x2="160" y2="30" stroke="rgba(254, 240, 138, 0.25)" stroke-width="1" stroke-dasharray="4 3"/>
+        </svg>
+
+        <!-- Floating Math Nodes dynamic content container -->
+        <div id="mathNodesContainer"></div>
+    </div>
+
+    <!-- TOP NAVIGATION BAR (READ-ONLY VIEWER VERSION) -->
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <div class="brand-logo">
+                <div class="logo-icon-wrap">
+                    <i class="fa-solid fa-graduation-cap excel-icon"></i>
+                </div>
+                <span class="brand-text">Bảng Tra Cứu Bài Giảng TOÁN 12 - ANH HOÀNG VŨ</span>
+            </div>
+        </div>
+
+        <div class="navbar-right">
+            <!-- Search Input -->
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm bài toán, tài liệu..." autocomplete="off">
+                <button class="clear-search" id="btnClearSearch" title="Xóa tìm kiếm">&times;</button>
+            </div>
+
+            <!-- Filter Star Toggle -->
+            <button class="btn btn-filter-star" id="btnFilterYellow">
+                <i class="fa-solid fa-star text-gold"></i> Lọc Tô Vàng
+            </button>
+
+            <!-- Export Excel (CSV) Button -->
+            <button class="btn btn-excel" id="btnExportCsv">
+                <i class="fa-solid fa-file-csv"></i> Xuất Excel (CSV)
+            </button>
+        </div>
+    </nav>
+
+    <!-- CHAPTER NAVIGATION TABS BAR -->
+    <div class="chapter-tabs-bar">
+        <div class="tabs-container" id="chapterTabs">
+            <button class="tab-item active" data-chapter="CHƯƠNG 1: ỨNG DỤNG ĐẠO HÀM ĐỂ KHẢO SÁT VÀ VẼ ĐỒ THỊ HÀM SỐ">
+                <i class="fa-solid fa-chart-line"></i> Chương 1
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 2: VECTOR VÀ HỆ TỌA ĐỘ TRONG KHÔNG GIAN">
+                <i class="fa-solid fa-arrows-to-dot"></i> Chương 2
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 3: CÁC SỐ ĐẶC TRƯNG ĐO MỨC ĐỘ PHÂN TÁN CHO MẪU SỐ LIỆU GHÉP NHÓM">
+                <i class="fa-solid fa-chart-pie"></i> Chương 3
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 4: NGUYÊN HÀM. TÍCH PHÂN">
+                <i class="fa-solid fa-calculator"></i> Chương 4
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 5: PHƯƠNG TRÌNH MẶT PHẲNG, ĐƯỜNG THẲNG, MẶT CẦU">
+                <i class="fa-solid fa-cube"></i> Chương 5
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 6: XÁC SUẤT CÓ ĐIỀU KIỆN">
+                <i class="fa-solid fa-dice"></i> Chương 6
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 7: XÁC SUẤT CỔ ĐIỂN NÂNG CAO">
+                <i class="fa-solid fa-trophy"></i> Chương 7
+            </button>
+            <button class="tab-item" data-chapter="CHƯƠNG 8: 1 SỐ BÀI TOÁN THÚ VỊ KHÁC">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Chương 8
+            </button>
+            <button class="tab-item" data-chapter="ALL">
+                <i class="fa-solid fa-border-all"></i> Tất Cả Chương
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN EXCEL SHEET CONTAINER -->
+    <main class="sheet-viewport">
+        <div class="sheet-container">
+            <!-- SHEET HEADER BANNER BOX -->
+            <div class="sheet-header-box">
+                <div class="header-badge-bar">
+                    <span class="header-chip chip-blue"><i class="fa-solid fa-graduation-cap"></i> TOÁN THPT QG 12</span>
+                    <span class="header-chip chip-gold" id="chipPriorityCount"><i class="fa-solid fa-star"></i> 18 Bài Ưu Tiên</span>
+                    <span class="header-chip chip-green" id="chipTotalCount"><i class="fa-solid fa-book-open"></i> <span id="totalLessonNum">25</span> Bài Học</span>
+                    <span class="header-chip chip-viewmode"><i class="fa-solid fa-shield-halved"></i> CHẾ ĐỘ NGƯỜI XEM</span>
+                </div>
+                <h1 class="sheet-main-title" id="sheetMainTitle">
+                    THỐNG KÊ BÀI GIẢNG TOÁN 12 ANH HOÀNG VŨ
+                </h1>
+                <p class="sheet-subtitle" id="sheetSubTitle">
+                    (Lịch học & Danh sách Tài liệu Môn Toán 12 - CHƯƠNG 1: ỨNG DỤNG ĐẠO HÀM ĐỂ KHẢO SÁT VÀ VẼ ĐỒ THỊ HÀM SỐ)
+                </p>
+            </div>
+
+            <!-- EXCEL TABLE STRUCTURE (5 READ-ONLY COLUMNS) -->
+            <div class="table-frame">
+                <table class="hoangvu-table" id="mathTable">
+                    <thead>
+                        <tr>
+                            <th class="th-stt">STT</th>
+                            <th class="th-title" id="thChapterTitle">TIÊU ĐỀ BÀI GIẢNG TOÁN (CHƯƠNG 1)</th>
+                            <th class="th-video">LINK VIDEO BÀI GIẢNG</th>
+                            <th class="th-answer">FILE ĐI KÈM ĐÁP ÁN (PDF)</th>
+                            <th class="th-exercise">FILE ĐỀ IN / BÀI TẬP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Content dynamically rendered via viewer.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- PREVIEW / MEDIA MODAL -->
+    <div class="modal-overlay hidden" id="previewModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-head">
+                <h3 id="previewTitle"><i class="fa-solid fa-file-pdf text-primary"></i> Xem Tài Liệu</h3>
+                <div class="preview-actions">
+                    <a href="#" target="_blank" class="btn btn-sm btn-secondary" id="btnOpenExternal"><i class="fa-solid fa-up-right-from-square"></i> Mở tab mới</a>
+                    <button class="btn-close-modal" id="btnClosePreview">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body preview-body" id="previewContainer"></div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-wrapper" id="toastWrapper"></div>
+
+    <script src="database.js"></script>
+    <script src="viewer.js"></script>
+</body>
+</html>
